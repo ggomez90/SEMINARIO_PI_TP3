@@ -4,11 +4,20 @@ import java.util.ArrayList;
 
 public class CuentaCorriente {
 	
+	private int id;
 	private ArrayList<Movimiento> movimientos;
 	private double saldoFinal;
 	
 	public CuentaCorriente() {
 		this.saldoFinal = 0;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public ArrayList<Movimiento> getMovimientos() {

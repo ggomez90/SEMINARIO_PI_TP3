@@ -1,5 +1,9 @@
 package Enumerados;
 
+import java.util.Scanner;
+
+import Utilidades.MetodosGenerales;
+
 public enum Provincia {
 	BUENOS_AIRES (1, "Buenos Aires"),
 	CATAMARCA (2, "Catamarca"),
@@ -39,5 +43,38 @@ public enum Provincia {
 	
 	public String getNombre() {
 		return this.nombre;
+	}
+	
+	public static Provincia seleccionarProvincia () {
+		Scanner entrada = new Scanner (System.in);
+		String auxOpcion;
+		int opcion = 0;
+		boolean exito = false;
+		System.out.println("Seleccione una provincia:");
+		do {
+			for (Provincia elemento: Provincia.values()) {
+				System.out.println(elemento.getCodigo() + " - " + elemento.getNombre());
+			}
+			System.out.print("Ingrese el código de la provincia: ");
+			auxOpcion = entrada.nextLine();
+			exito = MetodosGenerales.controlNumeroEntero(auxOpcion);
+			if (exito) {
+				opcion = Integer.parseInt(auxOpcion);
+				if (opcion < 1 || opcion > 23) {
+					System.out.println("Código inválido, intente de nuevo.");
+					exito = false;
+				} else {
+					exito = true;
+				}
+			} else {
+				Utilidades.MensajesConsola.verificarDato();
+			}
+		} while(!exito);
+		for (Provincia elemento : Provincia.values()) {
+            if (elemento.getCodigo() == opcion) {
+                return elemento;
+            }
+        }
+		return null;
 	}
 }

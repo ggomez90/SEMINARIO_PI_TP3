@@ -1,11 +1,14 @@
 package Entidades;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import Enumerados.Provincia;
 import Enumerados.Sexo;
 
 public class Empleado extends Persona{
+	
+	public static ArrayList<Empleado> listaEmpleados = new ArrayList<Empleado>();
 	
 	private LocalDate fechaIngreso;
 	private LocalDate fechaEgreso;

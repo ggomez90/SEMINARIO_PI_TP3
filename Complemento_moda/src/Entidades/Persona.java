@@ -6,6 +6,7 @@ import Enumerados.Sexo;
 
 public abstract class Persona {
 	
+	private int id;
 	private int dni;
 	private boolean activo;
 	private String nombres;
@@ -35,6 +36,29 @@ public abstract class Persona {
 		this.localidad = localidad;
 		this.fechaNacimiento = fechaNacimiento;
 		this.sexo = sexo;
+	}
+	
+	//Constructor para crear Personas desde consulta SQL
+	public Persona(int id, int dni, boolean activo, String nombres, String apellidos, String direccion, String telefono, Provincia provincia, String localidad, LocalDate fechaNacimiento, Sexo sexo) {
+		this.id = id;
+		this.dni = dni;
+		this.activo = activo;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.direccion = direccion;
+		this.telefono = telefono;
+		this.provincia = provincia;
+		this.localidad = localidad;
+		this.fechaNacimiento = fechaNacimiento;
+		this.sexo = sexo;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getDni() {
