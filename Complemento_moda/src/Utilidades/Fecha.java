@@ -1,5 +1,6 @@
 package Utilidades;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -18,19 +19,28 @@ public class Fecha {
 	
 	public static LocalDate crearFecha (String mensaje) {
 		boolean exito = false;
+		LocalDate fecha = null;
 		System.out.println(mensaje);
 		do {
 			int dia = MetodosGenerales.castearEntero("Ingrese el dia: ");
 			int mes = MetodosGenerales.castearEntero("Ingrese el mes: ");
 			int anio = MetodosGenerales.castearEntero("Ingrese el año: ");
 			try {
-				LocalDate fecha = LocalDate.of(anio, mes, dia);
-				return fecha;
-			} catch (DateTimeParseException | IllegalArgumentException error) {
+				fecha = LocalDate.of(anio, mes, dia);
+				exito = true;
+			} catch (DateTimeParseException error) {
+				System.out.println("Fecha no válida. Intente nuevamente.");
+			} catch (DateTimeException error) {
+				System.out.println("Fecha no válida. Intente nuevamente.");
+			} catch(IllegalArgumentException error) {
 				System.out.println("Fecha no válida. Intente nuevamente.");
 			}
+			if (anio > LocalDate.now().getYear()) {
+				System.out.println("Año no válido. Intente nuevamente.");
+				exito = false;
+			}
 		}while(!exito);
-		return null;
+		return fecha;
 	}
 	
 }

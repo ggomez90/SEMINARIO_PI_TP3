@@ -3,7 +3,6 @@ package Entidades;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import Archivos.Usuario;
 import Enumerados.Provincia;
 import Enumerados.Sexo;
 import Utilidades.MensajesConsola;
@@ -12,6 +11,8 @@ import Utilidades.MetodosGenerales;
 public class Usuario {
 	
 	public static ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
+	public static Usuario usuarioLogueado;
+	public static boolean admin = false;
 	
 	private String usuario;
 	private String clave;

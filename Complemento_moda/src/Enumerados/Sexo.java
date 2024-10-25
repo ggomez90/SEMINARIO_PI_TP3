@@ -25,6 +25,14 @@ public enum Sexo {
 		return this.nombre;
 	}
 	
+	public static String mostrarSexo(Sexo elemento) {
+		if (elemento != null) {
+			return elemento.getNombre();
+		} else {
+			return "No existe sexo seleccionada.";
+		}
+	}
+	
 	public static Sexo seleccionarSexo () {
 		Scanner entrada = new Scanner (System.in);
 		String auxOpcion;

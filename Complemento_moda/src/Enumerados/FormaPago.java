@@ -27,6 +27,14 @@ public enum FormaPago {
 		return this.nombre;
 	}
 	
+	public static String mostrarFormaPago(FormaPago elemento) {
+		if (elemento != null) {
+			return elemento.getNombre();
+		} else {
+			return "No existe forma de pago seleccionada.";
+		}
+	}
+	
 	public static FormaPago seleccionarFormaPago () {
 		Scanner entrada = new Scanner (System.in);
 		String auxOpcion;

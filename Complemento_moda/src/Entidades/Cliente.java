@@ -25,4 +25,8 @@ public class Cliente extends Persona{
 		return ctaCte;
 	}
 
+	public void setCtaCte(CuentaCorriente ctaCte) {
+		this.ctaCte = ctaCte;
+	}
+
 }

@@ -45,6 +45,14 @@ public enum Provincia {
 		return this.nombre;
 	}
 	
+	public static String mostrarProvincia(Provincia elemento) {
+		if (elemento != null) {
+			return elemento.getNombre();
+		} else {
+			return "No existe provincia seleccionada.";
+		}
+	}
+	
 	public static Provincia seleccionarProvincia () {
 		Scanner entrada = new Scanner (System.in);
 		String auxOpcion;

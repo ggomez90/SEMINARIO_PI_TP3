@@ -47,9 +47,9 @@ public class MetodosEmpleado {
 		return null;
 	}
 
-	public Empleado bajaEmpleado () {
+	/*public Empleado bajaEmpleado () {
 		int dniBuscado = MensajesConsola.buscarPorDNI();
-		Empleado buscado = new MetodosEmpleado().buscarEmpleado(dniBuscado, Empleado.listaEmpleados);
+		Empleado buscado = this.buscarEmpleado(dniBuscado, Empleado.listaEmpleados);
 		if (buscado != null) {
 			int opcion = MensajesConsola.opcionSINO("El empleado pasará a estado INACTIVO, desea continuar?");
 			if (opcion == 1) {
@@ -61,6 +61,22 @@ public class MetodosEmpleado {
 			MensajesConsola.datoNoEncontrado();
 		}
 		return buscado;
+	}*/
+	
+	public void bajaEmpleado (Empleado empleado, String tipo) {
+		if (empleado != null) {
+			MensajesConsola.estadoPersona(empleado,tipo);
+			if (empleado.isActivo()) {
+				int activo = MensajesConsola.opcionSINO("Desea modificar su estado?");
+				if (activo == 1) {
+					empleado.setActivo(false);
+					empleado.setFechaEgreso(LocalDate.now());
+					MensajesConsola.cambiosGuardados();
+				}
+			} else {
+				MensajesConsola.operacionNoDisponible();
+			}
+		}
 	}
 	
 	public Empleado modificarEmpleado (Empleado empleado) {
@@ -93,37 +109,49 @@ public class MetodosEmpleado {
 	
 	private Empleado opcionesModificablesEmpleado(Empleado empleado, int opcion) {
 		Scanner entrada = new Scanner (System.in);
+		boolean exito = false;
 		switch (opcion) {
 			case 11: LocalDate fechaIngreso = Utilidades.Fecha.crearFecha("Fecha de inicio de actividades:");
-					 empleado.setFechaIngreso(fechaIngreso);		 
+					 empleado.setFechaIngreso(fechaIngreso);
+					 exito = true;
 					 break;
 			case 12: LocalDate fechaEgreso = Utilidades.Fecha.crearFecha("Fecha de cese de actividades:");
 					 empleado.setFechaEgreso(fechaEgreso);
+					 exito = true;
 					 break;
 			case 13: int legajo = MetodosGenerales.datoObligatorioEntero("Ingrese Legajo: ");
 					 empleado.setLegajo(legajo);
+					 exito = true;
 					 break;
 			case 14: double salario = MetodosGenerales.datoObligatorioDouble("Ingrese salario: ");
 					 empleado.setSalario(salario);
+					 exito = true;
 					 break;
+		}
+		if (exito) {
+			MensajesConsola.cambiosGuardados();
 		}
 		return empleado;
 	}
 	
 	public String datosEmpleado(Empleado empleado) {
-		String retorno = new MetodosPersona().datosPersona(empleado);
-		String fechaAux;
-		if (empleado.getFechaEgreso() != null) {
-			fechaAux = Utilidades.Fecha.formatearFecha(empleado.getFechaIngreso());
+		if (empleado != null) {
+			String retorno = new MetodosPersona().datosPersona(empleado);
+			String fechaAux;
+			if (empleado.getFechaEgreso() != null) {
+				fechaAux = Utilidades.Fecha.formatearFecha(empleado.getFechaIngreso());
+			} else {
+				fechaAux = " - ";
+			}
+			retorno = retorno + "Fecha de ingreso: " + Utilidades.Fecha.formatearFecha(empleado.getFechaIngreso()) + "\n" +
+					  "Fecha de egreso: " + fechaAux + "\n" + 
+					  "Legajo: " + empleado.getLegajo() + "\n" +
+					  "Salario: " + empleado.getSalario();
+			
+			return retorno;
 		} else {
-			fechaAux = " - ";
+			return "Dato no encontrado";
 		}
-		retorno = retorno + "Fecha de ingreso: " + Utilidades.Fecha.formatearFecha(empleado.getFechaIngreso()) + "\n" +
-				  "Fecha de egreso: " + fechaAux + "\n" + 
-				  "Legajo: " + empleado.getLegajo() + "\n" +
-				  "Salario: " + empleado.getSalario();
-		
-		return retorno;
 	}
 	
 	public void imprimirDatosEmpleados(ArrayList<Empleado> listaEmpleados) {

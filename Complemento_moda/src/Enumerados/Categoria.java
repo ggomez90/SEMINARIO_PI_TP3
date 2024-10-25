@@ -25,6 +25,14 @@ public enum Categoria {
 		return this.nombre;
 	}
 	
+	public static String mostrarCategoria(Categoria elemento) {
+		if (elemento != null) {
+			return elemento.getNombre();
+		} else {
+			return "No existe categoria seleccionada.";
+		}
+	}
+	
 	public static Categoria seleccionarCategoria () {
 		Scanner entrada = new Scanner (System.in);
 		String auxOpcion;

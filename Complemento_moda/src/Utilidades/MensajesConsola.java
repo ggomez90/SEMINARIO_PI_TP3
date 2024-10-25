@@ -2,6 +2,9 @@ package Utilidades;
 
 import java.util.Scanner;
 
+import Entidades.Persona;
+import Entidades.Usuario;
+
 public class MensajesConsola {
 
 	public static void verificarDato() {
@@ -15,6 +18,69 @@ public class MensajesConsola {
 	public static void datoNoEncontrado() {
 		System.out.println("No existen coincidencias con su búsqueda.");
 	}
+	
+	public static void cambiosGuardados() {
+		System.out.println("Los cambios fueron guardados con éxito.");
+	}
+	
+	public static void moduloEnProceso(String mensaje) {
+		System.out.println("El módulo de " + mensaje + " se encuentra en producción.");
+	}
+	
+	public static int ingreseOpcion() {
+		int opcion = MetodosGenerales.datoObligatorioEntero("Ingrese una opción: ");
+		return opcion;
+	}
+	
+	public static void saludoBienvenida(int tipoUsuario) {
+		switch (tipoUsuario) {
+			case 0: System.out.println("Comuniquese con el administrador para reestablecer su usuario/clave");
+					break;
+			case 1: System.out.println("USUARIO ADMIN");
+					break;
+			case 2: System.out.println("USUARIO " + Usuario.usuarioLogueado.getUsuario());
+					break;
+			case 3: System.out.println("USUARIO " + Usuario.usuarioLogueado.getUsuario());
+					break;
+			default: MensajesConsola.verificarDato();
+					break;
+		}
+	}
+	
+	public static void saludoFinal() {
+		System.out.println("El programa ha finalizado, hasta luego.");
+	}
+	
+	public static void enProcesoDesarrollo() {
+		System.out.println("Este módulo se encuentra en proceso de desarrollo.");
+	}
+	
+	public static String retornarParametroParaConsola(String mensaje) {
+		if (mensaje != null) {
+			return mensaje;
+		} else {
+			return "Sin datos.";
+		}
+	}
+	
+	public static void imprimirEnConsola(String mensaje) {
+		System.out.println(mensaje);
+	}
+	
+	public static void estadoPersona(Persona persona, String mensaje) {
+		if (persona != null) {
+			if (persona.isActivo()) {
+				System.out.println(mensaje + " se encuentra ACTIVO.");
+			} else {
+				System.out.println(mensaje + " NO se encuentra ACTIVO.");
+			}
+		}
+	}
+	
+	public static void operacionNoDisponible() {
+		System.out.println("La operacion no se puede realizar.");
+	}
+	
 	
 	public static int opcionSINO(String mensaje) {
 		Scanner entrada = new Scanner (System.in);
@@ -58,6 +124,13 @@ public class MensajesConsola {
 		System.out.println("12- Fecha de egreso");
 		System.out.println("13- Legajo");
 		System.out.println("14- Salario");
+	}
+	
+	public static void camposModificablesUsuario() {
+		System.out.println("1- Nombre de usuario");
+		System.out.println("2- Clave");
+		System.out.println("3- Permisos");
+		System.out.println("4- Cambio de propietario");
 	}
 	
 	public static int buscarPorDNI() {
