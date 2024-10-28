@@ -104,7 +104,7 @@ public class MetodosGenerales {
 		return null;
 	}
 	
-	public static int castearEntero (String mensaje) {
+	/*public static int castearEntero (String mensaje) {
 		int numero = 0;
 		boolean flag = true;
 		Scanner entrada = new Scanner(System.in);
@@ -138,7 +138,7 @@ public class MetodosGenerales {
 			}
 		}while(!flag);		
 		return numero;
-	}
+	}*/
 	
 	public static boolean verificarRango (int opcion, int desde, int hasta) {
 		if (opcion >= desde && opcion <= hasta) {

@@ -144,9 +144,9 @@ public class MensajesConsola {
 			if (flag) {
 				dni = Integer.parseInt(dniString);
 				flag = true;
-			} else {
+			} /*else {
 				verificarDato();
-			}
+			}*/
 		}while(!flag);
 		return dni;
 	}

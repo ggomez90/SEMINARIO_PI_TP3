@@ -8,6 +8,5 @@ public class MetodosCuentaCorriente {
 		System.out.println("Listado de Movimientos de la Cuenta Corriente de: " + cliente.getApellidos() + " " + cliente.getNombres());
 	    System.out.println("--------------------------------------------------------------------------------------------------");
 	    cliente.getCtaCte().setSaldoFinal(MetodosMovimiento.listarMovimientos(cliente.getCtaCte().getMovimientos()));
-	}
-	
+	}	
 }

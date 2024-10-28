@@ -9,6 +9,7 @@ public class CuentaCorriente {
 	private double saldoFinal;
 	
 	public CuentaCorriente() {
+		this.movimientos = new ArrayList<Movimiento>();
 		this.saldoFinal = 0;
 	}
 

@@ -80,7 +80,6 @@ public class MetodosEmpleado {
 	}
 	
 	public Empleado modificarEmpleado (Empleado empleado) {
-		Scanner entrada = new Scanner(System.in);
 		boolean flag = false;
 		do {
 			MensajesConsola.camposModificablesPersona();
@@ -108,7 +107,6 @@ public class MetodosEmpleado {
 
 	
 	private Empleado opcionesModificablesEmpleado(Empleado empleado, int opcion) {
-		Scanner entrada = new Scanner (System.in);
 		boolean exito = false;
 		switch (opcion) {
 			case 11: LocalDate fechaIngreso = Utilidades.Fecha.crearFecha("Fecha de inicio de actividades:");

@@ -24,8 +24,9 @@ public class MetodosPersona {
 	}
 	
 	public String datosPersona(Persona persona) {
+		String retorno = null;
 		if (persona != null) {
-			return "DNI: " + persona.getDni() + "\n" + 
+			retorno = "DNI: " + persona.getDni() + "\n" + 
 					"Activo: " + MetodosGenerales.verificarBoolean(persona.isActivo()) + "\n" +  
 					"Apellido/s: " + persona.getApellidos() + "\n" + 
 					"Nombre/s: " + persona.getNombres() + "\n" +
@@ -36,10 +37,10 @@ public class MetodosPersona {
 					"Provincia: " + Provincia.mostrarProvincia(persona.getProvincia()) + "\n" +
 					"Localidad: " + MensajesConsola.retornarParametroParaConsola(persona.getLocalidad()) + "\n";
 		}
-		return null;
+		return MensajesConsola.retornarParametroParaConsola(retorno);
 	}
 	
-	public ArrayList<String> listarPersonas (ArrayList<Persona> listadoPersonas){
+	public ArrayList<String> listarPersonas (ArrayList<? extends Persona> listadoPersonas){
 		if (listadoPersonas != null) {
 			ArrayList<String> lista = new ArrayList<String>();
 			for (Persona elemento: listadoPersonas) {

@@ -22,9 +22,9 @@ public class Fecha {
 		LocalDate fecha = null;
 		System.out.println(mensaje);
 		do {
-			int dia = MetodosGenerales.castearEntero("Ingrese el dia: ");
-			int mes = MetodosGenerales.castearEntero("Ingrese el mes: ");
-			int anio = MetodosGenerales.castearEntero("Ingrese el año: ");
+			int dia = MetodosGenerales.datoObligatorioEntero("Ingrese el dia: ");
+			int mes = MetodosGenerales.datoObligatorioEntero("Ingrese el mes: ");
+			int anio = MetodosGenerales.datoObligatorioEntero("Ingrese el año: ");
 			try {
 				fecha = LocalDate.of(anio, mes, dia);
 				exito = true;

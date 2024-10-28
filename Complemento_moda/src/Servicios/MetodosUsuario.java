@@ -40,17 +40,19 @@ public class MetodosUsuario {
 			}
 		}while (!exito);
 		if (exitoAux == 1) {
-			String user, clave, claveRep;
-			do {
-				user = MetodosGenerales.datoObligatorioString("Ingrese nombre de usuario (Al menos 6 caracteres): ");
-				user = this.ControlUserClave(user, user, 1);
-			}while (user.equals(null));
-			do {
-				clave = MetodosGenerales.datoObligatorioString("Ingrese clave del usuario (Al menos 8 caracteres): ");
-				claveRep = MetodosGenerales.datoObligatorioString("Ingrese nuevamente la clave: ");
-				clave = this.ControlUserClave(clave, claveRep, 2);
-			} while (clave.equals(null));
-			return new Usuario (user, clave, empleado);
+			if(empleado != null) {
+				String user, clave, claveRep;
+				do {
+					user = MetodosGenerales.datoObligatorioString("Ingrese nombre de usuario (Al menos 6 caracteres): ");
+					user = this.ControlUserClave(user, user, 1);
+				}while (user.equals(""));
+				do {
+					clave = MetodosGenerales.datoObligatorioString("Ingrese clave del usuario (Al menos 8 caracteres): ");
+					claveRep = MetodosGenerales.datoObligatorioString("Ingrese nuevamente la clave: ");
+					clave = this.ControlUserClave(clave, claveRep, 2);
+				} while (clave.equals(""));
+				return new Usuario (user, clave, empleado);
+			}
 		} else {
 			opcion = MensajesConsola.opcionSINO("Desea crear un nuevo empleado?");
 			if (opcion == 1) {
