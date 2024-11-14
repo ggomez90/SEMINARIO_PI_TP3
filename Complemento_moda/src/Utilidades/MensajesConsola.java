@@ -6,6 +6,10 @@ import Entidades.Persona;
 import Entidades.Usuario;
 
 public class MensajesConsola {
+	
+	public static void separador() {
+		System.out.println("=================================================");
+	}
 
 	public static void verificarDato() {
 		System.out.println("El dato ingresado no es correcto, reintente.");
@@ -33,17 +37,10 @@ public class MensajesConsola {
 	}
 	
 	public static void saludoBienvenida(int tipoUsuario) {
-		switch (tipoUsuario) {
-			case 0: System.out.println("Comuniquese con el administrador para reestablecer su usuario/clave");
-					break;
-			case 1: System.out.println("USUARIO ADMIN");
-					break;
-			case 2: System.out.println("USUARIO " + Usuario.usuarioLogueado.getUsuario());
-					break;
-			case 3: System.out.println("USUARIO " + Usuario.usuarioLogueado.getUsuario());
-					break;
-			default: MensajesConsola.verificarDato();
-					break;
+		if (tipoUsuario == 1 || tipoUsuario == 2) {
+			System.out.println("USUARIO " + Usuario.usuarioLogueado.getUsuario().toUpperCase());
+		} else {
+			System.out.println("Comuniquese con el administrador para reestablecer su usuario/clave");
 		}
 	}
 	
@@ -64,7 +61,9 @@ public class MensajesConsola {
 	}
 	
 	public static void imprimirEnConsola(String mensaje) {
-		System.out.println(mensaje);
+		if (mensaje != null) {
+			System.out.println(mensaje);
+		}
 	}
 	
 	public static void estadoPersona(Persona persona, String mensaje) {
@@ -110,7 +109,7 @@ public class MensajesConsola {
 		System.out.println("1- DNI");
 		System.out.println("2- Nombre/s");
 		System.out.println("3- Apellido/s");
-		System.out.println("4- Estado del ciente");
+		System.out.println("4- Estado");
 		System.out.println("5- Teléfono");
 		System.out.println("6- Provincia");
 		System.out.println("7- Localidad");
@@ -133,12 +132,12 @@ public class MensajesConsola {
 		System.out.println("4- Cambio de propietario");
 	}
 	
-	public static int buscarPorDNI() {
+	public static int buscarPorDatoEntero(String mensaje) {
 		Scanner entrada = new Scanner (System.in);
 		boolean flag = false;
 		int dni = 0;
 		do {
-			System.out.print("Ingrese el DNI a buscar: ");
+			System.out.print(mensaje);
 			String dniString = entrada.nextLine();
 			flag = MetodosGenerales.controlNumeroEntero(dniString);
 			if (flag) {

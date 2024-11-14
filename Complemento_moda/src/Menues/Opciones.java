@@ -1,5 +1,8 @@
 package Menues;
 
+import DAO.ClienteDAO;
+import DAO.EmpleadoDAO;
+import DAO.UsuarioDAO;
 import Entidades.Cliente;
 import Entidades.Empleado;
 import Entidades.Usuario;
@@ -13,11 +16,14 @@ public class Opciones {
 	public static int opcionSecundario;
 	
 	public static boolean menuPrincipal(boolean admin) {
+		System.out.println("MENU PRINCIPAL");
+		MensajesConsola.separador();
 		if (admin) {
 			opcionPrincipal = seleccionarOpcion(opcionesPrincipalAdmin(), 0, 9);
 		} else {
 			opcionPrincipal = seleccionarOpcion(opcionesPrincipalReducido(), 0, 5);
 		}
+		MensajesConsola.separador();
 		if (opcionPrincipal != 0) {
 			return true;
 		} else {
@@ -101,6 +107,7 @@ public class Opciones {
 			default: MensajesConsola.verificarDato();
 			         break;
 		}
+		MensajesConsola.separador();
 	}
 	
 	public static int seleccionarOpcion(String opciones, int desde, int hasta) {
@@ -248,15 +255,22 @@ public class Opciones {
 	public static void elegidoCliente(int opcion) {
 		MetodosCliente elemento = new MetodosCliente();
 		switch (opcion) {
-		case 1: elemento.agregarClienteEnLista(elemento.altaCliente());
+		case 1: ClienteDAO.guardarClienteBD(elemento.altaCliente());
 				break;
-		case 2: MensajesConsola.imprimirEnConsola(elemento.datosCliente(elemento.buscarCliente(MensajesConsola.buscarPorDNI(), Cliente.listaClientes)));
+		case 2: Cliente buscado = ClienteDAO.buscarClientePorDNI(MensajesConsola.buscarPorDatoEntero("Ingrese DNI del cliente: "));
+				MensajesConsola.imprimirEnConsola(elemento.datosCliente(buscado));
+				if (buscado != null) {
+					int aux = MensajesConsola.opcionSINO("Desea ver la cuenta corriente?");
+					if (aux == 1) {
+						MetodosCuentaCorriente.mostrarCuentaCorriente(buscado);
+					}
+				}
 				break;
-		case 3: elemento.imprimirDatosClientes(Cliente.listaClientes);
+		case 3: elemento.imprimirDatosClientes(ClienteDAO.listarClientes());
 				break;
-		case 4: elemento.bajaCliente(elemento.buscarCliente(MensajesConsola.buscarPorDNI(), Cliente.listaClientes), "El cliente");
+		case 4: ClienteDAO.actualizarCliente(elemento.bajaCliente(ClienteDAO.buscarClientePorDNI(MensajesConsola.buscarPorDatoEntero("Ingrese DNI del cliente: ")), "Cliente "));
 				break;
-		case 5: elemento.modificarCliente(elemento.buscarCliente(MensajesConsola.buscarPorDNI(), Cliente.listaClientes));
+		case 5: ClienteDAO.actualizarCliente(elemento.modificarCliente(ClienteDAO.buscarClientePorDNI(MensajesConsola.buscarPorDatoEntero("Ingrese DNI del cliente: "))));
 				break;
 		case 0: default: MensajesConsola.verificarDato();
 				break;
@@ -266,15 +280,15 @@ public class Opciones {
 	public static void elegidoEmpleado(int opcion) {
 		MetodosEmpleado elemento = new MetodosEmpleado();
 		switch (opcion) {
-		case 1: elemento.agregarEmpleadoEnLista(elemento.altaEmpleado());
+		case 1: EmpleadoDAO.guardarEmpleadoBD(elemento.altaEmpleado());
 				break;
-		case 2: elemento.bajaEmpleado(elemento.buscarEmpleado(MensajesConsola.buscarPorDNI(), Empleado.listaEmpleados), "El empleado");
+		case 2: EmpleadoDAO.actualizarEmpleado(EmpleadoDAO.buscarEmpleado(MensajesConsola.buscarPorDatoEntero("Ingrese DNI/legajo del empleado: ")));
 		        break;
-		case 3: elemento.modificarEmpleado(elemento.buscarEmpleado(MensajesConsola.buscarPorDNI(), Empleado.listaEmpleados));
+		case 3: EmpleadoDAO.actualizarEmpleado(elemento.modificarEmpleado(EmpleadoDAO.buscarEmpleado(MensajesConsola.buscarPorDatoEntero("Ingrese DNI/legajo del empleado: "))));
 		        break;
-		case 4: MensajesConsola.imprimirEnConsola(elemento.datosEmpleado(elemento.buscarEmpleado(MensajesConsola.buscarPorDNI(), Empleado.listaEmpleados)));
+		case 4: MensajesConsola.imprimirEnConsola(elemento.datosEmpleado(EmpleadoDAO.buscarEmpleado(MensajesConsola.buscarPorDatoEntero("Ingrese DNI/legajo del empleado: "))));
 		        break;
-		case 5: elemento.imprimirDatosEmpleados(Empleado.listaEmpleados);
+		case 5: elemento.imprimirDatosEmpleados(EmpleadoDAO.listarEmpleados());
 		        break;
 		default: MensajesConsola.verificarDato();
 				 break;
@@ -284,15 +298,15 @@ public class Opciones {
 	public static void elegidoUsuario(int opcion) {
 		MetodosUsuario elemento = new MetodosUsuario();
 		switch (opcion) {
-		case 1: elemento.agregarUsuarioEnLista(elemento.altaUsuario());
+		case 1: UsuarioDAO.guardarUsuarioBD(elemento.altaUsuario());
 				break;
-		case 2: elemento.bajaUsuario();
+		case 2: UsuarioDAO.eliminarUsuario(UsuarioDAO.buscarUsuario(EmpleadoDAO.buscarEmpleado(MensajesConsola.buscarPorDatoEntero("Ingrese DNI/legajo del empleado: "))));
 		        break;
-		case 3: elemento.modificarUsuario(elemento.buscarUsuario(Usuario.listaUsuarios));
+		case 3: UsuarioDAO.actualizarUsuario(elemento.modificarUsuario(UsuarioDAO.buscarUsuario(EmpleadoDAO.buscarEmpleado(MensajesConsola.buscarPorDatoEntero("Ingrese DNI/legajo del empleado: ")))));
 		        break;
-		case 4: MensajesConsola.imprimirEnConsola(elemento.datosUsuario(elemento.buscarUsuario(Usuario.listaUsuarios)));
+		case 4: MensajesConsola.imprimirEnConsola(elemento.datosUsuario(UsuarioDAO.buscarUsuario(EmpleadoDAO.buscarEmpleado(MensajesConsola.buscarPorDatoEntero("Ingrese DNI/legajo del empleado: ")))));
 		        break;
-		case 5: elemento.imprimirDatosUsuarios(Usuario.listaUsuarios);
+		case 5: elemento.imprimirDatosUsuarios(UsuarioDAO.listarUsuarios());
 		        break;
 		default: MensajesConsola.verificarDato();
 				 break;

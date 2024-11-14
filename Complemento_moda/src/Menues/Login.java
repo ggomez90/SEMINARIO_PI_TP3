@@ -2,6 +2,7 @@ package Menues;
 
 import Entidades.Usuario;
 import Servicios.MetodosUsuario;
+import Utilidades.MensajesConsola;
 
 public class Login {
 		
@@ -10,12 +11,8 @@ public class Login {
 		if (new MetodosUsuario().iniciarSesion()) {
 			if (Usuario.admin) {
 				return 1;
-			} else if (Usuario.usuarioLogueado != null) {
-				if (Usuario.usuarioLogueado.isAdmin()) {
-					return 2;
-				} else {
-					return 3;
-				}
+			} else {
+				return 2;
 			}
 		}
 		return 0;	

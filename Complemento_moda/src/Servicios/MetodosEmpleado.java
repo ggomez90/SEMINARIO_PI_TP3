@@ -63,7 +63,7 @@ public class MetodosEmpleado {
 		return buscado;
 	}*/
 	
-	public void bajaEmpleado (Empleado empleado, String tipo) {
+	public Empleado bajaEmpleado (Empleado empleado, String tipo) {
 		if (empleado != null) {
 			MensajesConsola.estadoPersona(empleado,tipo);
 			if (empleado.isActivo()) {
@@ -77,6 +77,7 @@ public class MetodosEmpleado {
 				MensajesConsola.operacionNoDisponible();
 			}
 		}
+		return empleado;
 	}
 	
 	public Empleado modificarEmpleado (Empleado empleado) {

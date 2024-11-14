@@ -5,9 +5,9 @@ import java.util.Scanner;
 import Utilidades.MetodosGenerales;
 
 public enum Sexo {
-	MASCULINO(1, "Masculino"),
-	FEMENINO(2, "Femenino"),
-	OTRO(3, "Otro");
+	MASCULINO(1, "MASCULINO"),
+	FEMENINO(2, "FEMENINO"),
+	OTRO(3, "OTRO");
 	
 	private int codigo;
 	private String nombre;
@@ -60,6 +60,15 @@ public enum Sexo {
 		} while(!exito);
 		for (Sexo elemento : Sexo.values()) {
             if (elemento.getCodigo() == opcion) {
+                return elemento;
+            }
+        }
+		return null;
+	}
+	
+	public static Sexo convertirSexo(String dato) {
+		for (Sexo elemento : Sexo.values()) {
+            if (elemento.getNombre().equals(dato)) {
                 return elemento;
             }
         }

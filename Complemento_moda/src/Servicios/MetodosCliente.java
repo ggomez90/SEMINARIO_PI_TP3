@@ -80,17 +80,17 @@ public class MetodosCliente {
 		}
 	}*/
 	
-	public void bajaCliente (Cliente cliente, String tipo) {
-		MensajesConsola.estadoPersona(cliente,tipo);
-		if (cliente.isActivo()) {
-			int activo = MensajesConsola.opcionSINO("Desea modificar su estado?");
-			if (activo == 1) {
-				cliente.setActivo(false);
-				MensajesConsola.cambiosGuardados();
+	public Cliente bajaCliente (Cliente cliente, String tipo) {
+		if (cliente != null) {
+			MensajesConsola.estadoPersona(cliente,tipo);
+			if (cliente.isActivo()) {
+				int activo = MensajesConsola.opcionSINO("Desea modificar su estado?");
+				if (activo == 1) {
+					cliente.setActivo(false);
+				}
 			}
-		} else {
-			MensajesConsola.operacionNoDisponible();
 		}
+		return cliente;
 	}
 	
 	public Cliente modificarCliente (Cliente cliente) {
@@ -103,7 +103,7 @@ public class MetodosCliente {
 	
 	public void imprimirDatosClientes(ArrayList<Cliente> listaClientes) {
 		if (listaClientes != null) {
-			System.out.println("Listado de Clientes:");
+			System.out.println("\nListado de Clientes.");
 			for (Cliente elemento : listaClientes) {
 				System.out.println(this.datosCliente(elemento));
 				System.out.println("----------------------------");

@@ -5,29 +5,29 @@ import java.util.Scanner;
 import Utilidades.MetodosGenerales;
 
 public enum Provincia {
-	BUENOS_AIRES (1, "Buenos Aires"),
-	CATAMARCA (2, "Catamarca"),
-	CHACO (3, "Chaco"),
-	CHUBUT (4, "Chubut"),
-	CORDOBA (5, "Cordoba"),
-	CORRIENTES (6, "Corrientes"),
-	ENTRE_RIOS (7, "Entre Rios"),
-	FORMOSA (8, "Formosa"),
-	JUJUY (9, "Jujuy"),
-	LA_PAMPA (10, "La Pampa"),
-	LA_RIOJA (11, "La Rioja"),
-	MENDOZA (12, "Mendoza"),
-	MISIONES (13, "Misiones"),
-	NEUQUEN (14, "Neuquen"),
-	RIO_NEGRO (15, "Rio Negro"),
-	SALTA (16, "Salta"),
-	SAN_JUAN (17, "San Juan"),
-	SAN_LUIS (18, "San Luis"),
-	SANTA_CRUZ (19, "Santa Cruz"),
-	SANTA_FE (20, "Santa Fe"),
-	SANTIAGO_DEL_ESTERO (21, "Santiago Del Estero"),
-	TIERRA_DEL_FUEGO (22, "Tierra Del Fuego"),
-	TUCUMAN (23, "Tucuman");
+	BUENOS_AIRES (1, "BUENOS AIRES"),
+	CATAMARCA (2, "CATAMARCA"),
+	CHACO (3, "CHACO"),
+	CHUBUT (4, "CHUBUT"),
+	CORDOBA (5, "CORDOBA"),
+	CORRIENTES (6, "CORRIENTES"),
+	ENTRE_RIOS (7, "ENTRE RIOS"),
+	FORMOSA (8, "FORMOSA"),
+	JUJUY (9, "JUJUY"),
+	LA_PAMPA (10, "LA PAMPA"),
+	LA_RIOJA (11, "LA RIOJA"),
+	MENDOZA (12, "MENDOZA"),
+	MISIONES (13, "MISIONES"),
+	NEUQUEN (14, "NEUQUEN"),
+	RIO_NEGRO (15, "RIO NEGRO"),
+	SALTA (16, "SALTA"),
+	SAN_JUAN (17, "SAN JUAN"),
+	SAN_LUIS (18, "SAN LUIS"),
+	SANTA_CRUZ (19, "SANTA CRUZ"),
+	SANTA_FE (20, "SANTA FE"),
+	SANTIAGO_DEL_ESTERO (21, "SANTIAGO DEL ESTERO"),
+	TIERRA_DEL_FUEGO (22, "TIERRA DEL FUEGO"),
+	TUCUMAN (23, "TUCUMAN");
 	
 	private int codigo;
 	private String nombre;
@@ -83,6 +83,17 @@ public enum Provincia {
                 return elemento;
             }
         }
+		return null;
+	}
+	
+	public static Provincia convertirProvincia(String dato) {
+		if (dato != null) {
+			for (Provincia elemento : Provincia.values()) {
+	            if (elemento.getNombre().equals(dato)) {
+	                return elemento;
+	            }
+	        }
+		}
 		return null;
 	}
 }

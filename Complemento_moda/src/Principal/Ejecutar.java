@@ -1,5 +1,17 @@
 package Principal;
 
+//pruebas
+import java.util.ArrayList;
+import Servicios.MetodosCliente;
+import Servicios.MetodosCuentaCorriente;
+import Servicios.MetodosEmpleado;
+import Servicios.MetodosUsuario;
+import DAO.ClienteDAO;
+import DAO.EmpleadoDAO;
+import DAO.UsuarioDAO;
+import Entidades.Cliente;
+
+//dejar
 import Entidades.Usuario;
 import Menues.Login;
 import Menues.Opciones;
@@ -12,11 +24,15 @@ public class Ejecutar {
 	public static void main(String[] args) {
 		
 		tipoUsuario = Login.iniciarSistema();
+		MensajesConsola.separador();
 		MensajesConsola.saludoBienvenida(tipoUsuario);
-		while(Opciones.menuPrincipal(Usuario.admin)){
-			Opciones.menuSecundario(Usuario.admin);
+		MensajesConsola.separador();
+		if (tipoUsuario > 0) {
+			while(Opciones.menuPrincipal(Usuario.admin)){
+				Opciones.menuSecundario(Usuario.admin);
+			}
 		}
-
+		
 	}
 
 }

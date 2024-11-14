@@ -26,7 +26,8 @@ public class MetodosPersona {
 	public String datosPersona(Persona persona) {
 		String retorno = null;
 		if (persona != null) {
-			retorno = "DNI: " + persona.getDni() + "\n" + 
+			retorno = "\nDATOS: \n" +
+					"DNI: " + persona.getDni() + "\n" + 
 					"Activo: " + MetodosGenerales.verificarBoolean(persona.isActivo()) + "\n" +  
 					"Apellido/s: " + persona.getApellidos() + "\n" + 
 					"Nombre/s: " + persona.getNombres() + "\n" +
@@ -52,24 +53,26 @@ public class MetodosPersona {
 	}
 	
 	public Persona modificarPersona(Persona persona, String opciones) {
-		Scanner entrada = new Scanner(System.in);
-		boolean flag = false;
-		do {
-			MensajesConsola.camposModificablesPersona();
-			int opcion = MetodosGenerales.datoObligatorioEntero(opciones);
-			boolean flagAux = MetodosGenerales.verificarRango(opcion, 1, 10);
-			if (flagAux) {
-				return this.opcionesModificablesPersona(persona, opcion);
-			} else {
-				MensajesConsola.verificarDato();
-			}
-			int salir = MensajesConsola.opcionSINO("Desea salir?: ");
-			if (salir == 1) {
-				flag = true;
-			} else {
-				flag = false;
-			}
-		}while (!flag);
+		if (persona != null) {
+			Scanner entrada = new Scanner(System.in);
+			boolean flag = false;
+			do {
+				MensajesConsola.camposModificablesPersona();
+				int opcion = MetodosGenerales.datoObligatorioEntero(opciones);
+				boolean flagAux = MetodosGenerales.verificarRango(opcion, 1, 10);
+				if (flagAux) {
+					return this.opcionesModificablesPersona(persona, opcion);
+				} else {
+					MensajesConsola.verificarDato();
+				}
+				int salir = MensajesConsola.opcionSINO("Desea salir?: ");
+				if (salir == 1) {
+					flag = true;
+				} else {
+					flag = false;
+				}
+			}while (!flag);
+		}
 		return null;
 	}
 	

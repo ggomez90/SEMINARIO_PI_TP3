@@ -3,6 +3,8 @@ package Servicios;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import DAO.EmpleadoDAO;
+import DAO.UsuarioDAO;
 import Entidades.Empleado;
 import Entidades.Persona;
 import Entidades.Usuario;
@@ -21,8 +23,8 @@ public class MetodosUsuario {
 		int opcion = MensajesConsola.opcionSINO("El empleado existe en la base de datos? Desea buscarlo?");
 		do {
 			if (opcion == 1) {
-				int dni = MetodosGenerales.datoObligatorioEntero("Ingrese el DNI del empleado: ");
-				empleado = (Empleado) new MetodosPersona().buscarPersona(dni, Empleado.listaEmpleados);
+				int dni = MetodosGenerales.datoObligatorioEntero("Ingrese el DNI/legajo del empleado: ");
+				empleado = EmpleadoDAO.buscarEmpleado(dni);
 				if (empleado != null) {
 					exito = true;
 					exitoAux = 1;
@@ -57,16 +59,17 @@ public class MetodosUsuario {
 			opcion = MensajesConsola.opcionSINO("Desea crear un nuevo empleado?");
 			if (opcion == 1) {
 				empleado = new MetodosEmpleado().altaEmpleado();
+				EmpleadoDAO.guardarEmpleadoBD(empleado);
 				String user, clave, claveRep;
 				do {
 					user = MetodosGenerales.datoObligatorioString("Ingrese nombre de usuario (Al menos 6 caracteres): ");
 					user = this.ControlUserClave(user, user, 1);
-				}while (user.equals(null));
+				}while (user.equals(""));
 				do {
 					clave = MetodosGenerales.datoObligatorioString("Ingrese clave del usuario (Al menos 8 caracteres): ");
 					claveRep = MetodosGenerales.datoObligatorioString("Ingrese nuevamente la clave: ");
 					clave = this.ControlUserClave(clave, claveRep, 2);
-				} while (clave.equals(null));
+				} while (clave.equals(""));
 				return new Usuario (user, clave, empleado);
 			}
 		}
@@ -80,7 +83,6 @@ public class MetodosUsuario {
 				return dato1;
 			} catch (RequisitosUsuarios error) {
 				error.retornarError();
-				error.getMessage();
 			}
 		} else if ( codigo == 2) {
 			try {
@@ -88,10 +90,9 @@ public class MetodosUsuario {
 				return dato1;
 			} catch (RequisitosUsuarios error) {
 				error.retornarError();
-				error.getMessage();
 			}
 		}
-		return null;
+		return "";
 	}
 	
 	public void agregarUsuarioEnLista(Usuario nuevo) {
@@ -142,14 +143,18 @@ public class MetodosUsuario {
 			String user = entrada.nextLine();
 			System.out.print("CLAVE: ");
 			String clave = entrada.nextLine();
-			Usuario.usuarioLogueado = this.login(Usuario.listaUsuarios, user, clave);
+			UsuarioDAO.verificarUsuario(user, clave);
+			//Usuario.usuarioLogueado = this.login(Usuario.listaUsuarios, user, clave);
 			if (Usuario.usuarioLogueado != null) {
-				Usuario.admin = true;
+				if (Usuario.usuarioLogueado.isAdmin()) {
+					Usuario.admin = true;
+				}
 				return true;
-			} else if (this.iniciarSesionTester(user, clave)) {
-				Usuario.admin = true;
-				return true;
-			} else {
+			} 
+//			else if (this.iniciarSesionTester(user, clave)) {
+//				Usuario.admin = true;
+//				return true;
+			else {
 				System.out.print("Usuario o contraseña incorrectos: ");
 				if (intento == 5) {
 					System.out.println("Intentos agotados.");
@@ -163,13 +168,13 @@ public class MetodosUsuario {
 		return exito;
 	}
 	
-	public boolean iniciarSesionTester(String user, String clave) {
-		if (user.equals("admin") && clave.equals("admin")) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	public boolean iniciarSesionTester(String user, String clave) {
+//		if (user.equals("admin") && clave.equals("admin")) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 	
 	public Usuario buscarUsuario (ArrayList<Usuario> listaUsuarios) {
 		Scanner entrada = new Scanner (System.in);
@@ -209,25 +214,26 @@ public class MetodosUsuario {
 	}
 	
 	public Usuario modificarUsuario(Usuario usuario) {
-		MensajesConsola.camposModificablesUsuario();
-		Scanner entrada = new Scanner(System.in);
-		boolean flag = false;
-		do {
-			MensajesConsola.camposModificablesUsuario();
-			int opcion = MetodosGenerales.datoObligatorioEntero("Ingrese una opcion: ");
-			boolean flagAux = MetodosGenerales.verificarRango(opcion, 1, 4);
-			if (flagAux) {
-				return this.opcionesModificablesUsuario(usuario, opcion);
-			} else {
-				MensajesConsola.verificarDato();
-			}
-			int salir = MensajesConsola.opcionSINO("Desea salir?: ");
-			if (salir == 1) {
-				flag = true;
-			} else {
-				flag = false;
-			}
-		}while (!flag);
+		if (usuario != null) {
+			Scanner entrada = new Scanner(System.in);
+			boolean flag = false;
+			do {
+				MensajesConsola.camposModificablesUsuario();
+				int opcion = MetodosGenerales.datoObligatorioEntero("Ingrese una opcion: ");
+				boolean flagAux = MetodosGenerales.verificarRango(opcion, 1, 4);
+				if (flagAux) {
+					return this.opcionesModificablesUsuario(usuario, opcion);
+				} else {
+					MensajesConsola.verificarDato();
+				}
+				int salir = MensajesConsola.opcionSINO("Desea salir?: ");
+				if (salir == 1) {
+					flag = true;
+				} else {
+					flag = false;
+				}
+			}while (!flag);
+		}
 		return null;
 	}
 	
@@ -262,8 +268,8 @@ public class MetodosUsuario {
 						boolean exito = false;
 						do {
 							if (buscar == 1) {
-								int dni = MetodosGenerales.datoObligatorioEntero("Ingrese el DNI del empleado: ");
-								Empleado propietario = (Empleado) new MetodosPersona().buscarPersona(dni, Empleado.listaEmpleados);
+								int dni = MetodosGenerales.datoObligatorioEntero("Ingrese el DNI/legajo del empleado: ");
+								Empleado propietario = EmpleadoDAO.buscarEmpleado(dni);
 								if (propietario != null) {
 									usuario.setPropietario(propietario);
 									exito = true;
